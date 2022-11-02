@@ -1,0 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.form-cars {
+  display: none;
+}
+
+.form-cars-grid {
+  display: flex;
+  flex-direction: column;
+  margin: 40px;
+  width: 160px;
+}
