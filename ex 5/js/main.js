@@ -44,17 +44,18 @@ const Cars = [
   },
 ];
 
-const category = document.querySelector(".cras-category-input");
-const make = document.querySelector(".cras-make-input");
-const model = document.querySelector(".cras-model-input");
-const price = document.querySelector(".cras-price-input");
-const years = document.querySelector(".cras-years-input");
-const available = document.querySelector(".cras-available-input");
-const button = document.querySelector(".show-form");
-const submit = document.querySelector(".submit");
+const category = document.querySelector(".cars-category-input");
+const make = document.querySelector(".cars-make-input");
+const model = document.querySelector(".cars-model-input");
+const price = document.querySelector(".cars-price-input");
+const years = document.querySelector(".cars-years-input");
+const button = document.querySelector(".btn-success");
+const submit = document.querySelector(".btn-primary");
 const showAllCars = document.querySelector(".all-cars");
-const formCars = document.querySelector(".form-cars");
+const formCars = document.querySelector(".container");
 const mainDiv = document.querySelector("main");
+
+Cars.forEach(createHTML);
 
 button.addEventListener("click", toggleForm);
 
@@ -76,13 +77,10 @@ function addObject() {
     make.value,
     model.value,
     price.value,
-    years.value,
-    available.value
+    years.value
   );
   Cars.push(newObeject);
-  console.log(Cars);
   createHTML(newObeject, Cars.length - 1);
-  // addObjectToList(newObeject);
   clear();
 }
 
@@ -93,6 +91,7 @@ class addCar {
     this.model = model;
     this.price = price;
     this.year = year;
+    this.available = true;
   }
 }
 
@@ -102,30 +101,6 @@ function clear() {
   model.value = "";
   price.value = "";
   years.value = "";
-  available.value = "";
-}
-
-Cars.forEach(createHTML);
-
-function addObjectToList(cars) {
-  const div = document.querySelector("div");
-  div.className = "div-cars";
-  const btn = document.createElement("button");
-  btn.innerText = "X";
-  const h3 = document.createElement("h3");
-  h3.innerText = `Category: ${cars.category}, Make: ${cars.make}, Model: ${cars.model}`;
-  const h5 = document.createElement("h5");
-  h5.innerText = `Price of the car: ${cars.price}`;
-  const p = document.createElement("p");
-  p.innerText = `Years of the car: ${cars.year}`;
-  div.append(btn, h3, h5, p);
-  cars.DOM = div;
-  mainDiv.appendChild(div);
-  btn.addEventListener("click", function () {
-    h3.style.display = "none";
-    h5.style.display = "none";
-    p.style.display = "none";
-  });
 }
 
 function createHTML(car, i) {
@@ -135,21 +110,26 @@ function createHTML(car, i) {
     div.className = "each-car";
     const btn = document.createElement("button");
     btn.innerText = "X";
-    btn.title = "Click to remove";
+    btn.className = "btn-x";
     const h1 = document.createElement("h1");
     h1.innerText = car.make;
     const h2 = document.createElement("h2");
     h2.innerText = car.model;
+    const h3 = document.createElement("h3");
+    h3.innerText = car.year;
     const p = document.createElement("p");
     p.innerText = car.price;
-    div.append(btn, h1, h2, p);
+    div.append(btn, h1, h2, h3, p);
     car.DOM = div;
     mainDiv.appendChild(div);
+    btn.addEventListener("click", function () {
+      removeBtn(div);
+      Cars.splice([i], 1);
+      console.log(Cars);
+    });
   }
 }
 
-function remove(x) {
+function removeBtn(x) {
   x.remove();
 }
-
-console.log(Cars);
